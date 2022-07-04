@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.khadasevich.by/journal"
+        xmlns:tns="http://www.khadasevich.by/journal"
+        elementFormDefault="qualified">
+
+    <element name="journal">
+        <complexType>
+            <sequence>
+                <element name="title" type="string"/>
+                <element name="contacts" type="tns:JournalContacts"/>
+                <element name="articles">
+                    <complexType>
+                        <sequence>
+                            <element name="article" minOccurs="1" maxOccurs="unbounded" type="tns:JournalArticle"/>
+                        </sequence>
+                    </complexType>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
+
+    <complexType name="JournalContacts">
+        <sequence>
+            <element name="address" type="string"/>
+            <element name="tel" type="tns:ContactsTel"/>
+            <element name="email" type="tns:ContactsEmail"/>
+            <element name="url" type="tns:ContactsURL"/>
+        </sequence>
+    </complexType>
+
+    <simpleType name="ContactsTel">
+        <restriction base="string">
+            <pattern value="8-([0-9]{4})-([0-9]{6})"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="ContactsEmail">
+        <restriction base="string">
+            <pattern value="(.+)@(\S+)"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="ContactsURL">
+        <restriction base="string">
+            <pattern value="www(.)*"/>
+        </restriction>
+    </simpleType>
+    
+    <complexType name="JournalArticle">
+        <sequence>
+            <element name="title" type="string"/>
+            <element name="author" type="string"/>
+            <element name="url" type="string"/>
+            <element name="hotkeys">
+               <complexType>
+                    <sequence>
+                       <element name="hotkey" minOccurs="1" maxOccurs="unbounded" type="string"/>
+                   </sequence>
+               </complexType>
+            </element>
+        </sequence>
+        <attribute name="ID" use="required">
+            <simpleType>
+                <restriction base="int">
+                    <pattern value="[0-9]{1,}"/>
+                </restriction>
+            </simpleType>
+        </attribute>
+    </complexType>
+</schema>
